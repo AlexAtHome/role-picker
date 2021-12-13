@@ -1,0 +1,11 @@
+parser: typescript
+printWidth: 120
+tabWidth: 2
+useTabs: true
+semi: false
+singleQuote: true
+quoteProps: as-needed
+trailingComma: es5
+bracketSameLine: false
+arrowParens: avoid
+endOfLine: lf
