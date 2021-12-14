@@ -1,4 +1,4 @@
-import { Client, CommandInteraction, Guild, GuildMember, GuildMemberRoleManager, Intents, Role } from 'discord.js'
+import { Client, CommandInteraction, Intents } from 'discord.js'
 import { isNil } from 'lodash'
 import { ROLE_IDS, SECRET } from './constants'
 import { RoleSubcommand } from './interface'
@@ -40,19 +40,12 @@ export class Bot {
 		})
 	}
 
-	private async removeRole(interaction: CommandInteraction<'cached'>): Promise<void> {
-		await interaction.reply({ content: 'Not implemented yet!', ephemeral: true })
-	}
-
 	private async resolveCommand(interaction: CommandInteraction<'cached'>): Promise<void> {
 		if (interaction.commandName === 'role') {
 			try {
 				switch (interaction.options.getSubcommand()) {
 					case RoleSubcommand.GIVE: {
 						return this.giveRole(interaction)
-					}
-					case RoleSubcommand.REMOVE: {
-						return this.removeRole(interaction)
 					}
 				}
 			} catch(error) {

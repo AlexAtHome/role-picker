@@ -10,9 +10,3 @@ export const commands = new SlashCommandBuilder()
 			.setDescription('Gives you the specified role!')
 			.addRoleOption(option => option.setName('role').setDescription('The role you want to get').setRequired(true))
 	)
-	.addSubcommand(subcommand =>
-		subcommand
-			.setName(RoleSubcommand.REMOVE)
-			.setDescription('Removes the role from you')
-			.addRoleOption(option => option.setName('role').setDescription('The role you want to lose').setRequired(true))
-	)
