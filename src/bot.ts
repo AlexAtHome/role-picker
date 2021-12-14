@@ -40,12 +40,20 @@ export class Bot {
 		})
 	}
 
+	private async clearRoles(interaction: CommandInteraction<"cached">): Promise<void> {
+		await interaction.member.roles.remove(ROLE_IDS)
+		await interaction.reply({ content: 'All user set roles have been taken from you.', ephemeral: true })
+	}
+
 	private async resolveCommand(interaction: CommandInteraction<'cached'>): Promise<void> {
 		if (interaction.commandName === 'role') {
 			try {
 				switch (interaction.options.getSubcommand()) {
 					case RoleSubcommand.GIVE: {
 						return this.giveRole(interaction)
+					}
+					case RoleSubcommand.CLEAR: {
+						return this.clearRoles(interaction)
 					}
 				}
 			} catch(error) {
