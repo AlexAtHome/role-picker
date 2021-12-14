@@ -13,7 +13,14 @@ export class Bot {
 			.on('ready', bot => console.log(`${bot.user.tag} is ready!`))
 			.on('interactionCreate', async interaction => {
 				if (interaction.isCommand()) {
-					return this.resolveCommand(interaction as CommandInteraction<'cached'>)
+					try {
+						return this.resolveCommand(interaction as CommandInteraction<'cached'>)
+					} catch(error) {
+						await interaction.reply({
+							content: ':boon: An error occured. Try again later or contact the admin',
+							ephemeral: true
+						})
+					}
 				}
 			})
 			.login(SECRET)
@@ -47,20 +54,13 @@ export class Bot {
 
 	private async resolveCommand(interaction: CommandInteraction<'cached'>): Promise<void> {
 		if (interaction.commandName === 'role') {
-			try {
-				switch (interaction.options.getSubcommand()) {
-					case RoleSubcommand.GIVE: {
-						return this.giveRole(interaction)
-					}
-					case RoleSubcommand.CLEAR: {
-						return this.clearRoles(interaction)
-					}
+			switch (interaction.options.getSubcommand()) {
+				case RoleSubcommand.GIVE: {
+					return this.giveRole(interaction)
 				}
-			} catch(error) {
-				await interaction.reply({
-					content: ':boon: An error occured. Try again later or contact the admin',
-					ephemeral: true
-				})
+				case RoleSubcommand.CLEAR: {
+					return this.clearRoles(interaction)
+				}
 			}
 		}
 	}
