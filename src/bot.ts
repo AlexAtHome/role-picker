@@ -37,6 +37,7 @@ export class Bot {
 		} else if (role.members.has(interaction.member.id)) {
 			content = ':warning: Nope! You already have this role.'
 		} else {
+			await interaction.member.roles.remove(ROLE_IDS)
 			await interaction.member.roles.add(role)
 			content = `:white_check_mark: You now have the role ${role.toString()}!`
 		}
