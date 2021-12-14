@@ -5,12 +5,8 @@ import { RoleSubcommand } from './interface'
 
 export class Bot {
 	private readonly client = new Client({
-		intents: [Intents.FLAGS.GUILD_INTEGRATIONS],
+		intents: [Intents.FLAGS.GUILD_INTEGRATIONS, Intents.FLAGS.GUILDS],
 	})
-
-	private get guild(): Guild {
-		return this.client.guilds.cache.first() as Guild
-	}
 
 	async init(): Promise<string> {
 		return this.client
@@ -34,7 +30,7 @@ export class Bot {
 		} else if (role.members.has(interaction.member.id)) {
 			content = ':warning: Nope! You already have this role.'
 		} else {
-			interaction.member.roles.add(role)
+			await interaction.member.roles.add(role)
 			content = `:white_check_mark: You now have the role ${role.toString()}!`
 		}
 
